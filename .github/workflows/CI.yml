@@ -1,0 +1,46 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        node-version: [22.x, 23.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/previous-releases
+    runs-on: ubuntu-latest
+
+    name: Build with ${{ matrix.node-version }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js (${{ matrix.node-version }})
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: corepack enable
+        shell: bash
+      - run: pnpm install
+        shell: bash
+
+      - run: pnpm build
+        shell: bash
+
+  quality:
+    name: Quality checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js (22.x)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+      - run: corepack enable
+        shell: bash
+      - run: pnpm install
+        shell: bash
+
+      - name: Lint & Format
+        run: pnpm biome ci .

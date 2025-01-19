@@ -1,0 +1,34 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
+{
+  "name": "Node.js & TypeScript",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "waitFor": "onCreateCommand",
+  "postCreateCommand": "pnpm install --offline",
+  "updateContentCommand": "pnpm install",
+  "postAttachCommand": "pnpm dev",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "EditorConfig.editorconfig",
+        "streetsidesoftware.code-spell-checker",
+        "jock.svg",
+        "mikestead.dotenv",
+        "biomejs.biome",
+        "yoavbls.pretty-ts-errors",
+        "csstools.postcss",
+        "bradlc.vscode-tailwindcss"
+      ]
+    }
+  },
+  "portsAttributes": {
+    "3000": {
+      "label": "Application",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "forwardPorts": [3000]
+}

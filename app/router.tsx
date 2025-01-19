@@ -16,6 +16,11 @@ export function createRouter() {
   }
 
   const queryClient: QueryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 60 * 1000,
+      },
+    },
     mutationCache: new MutationCache({
       onError: (error) => {
         toast(error.message, { className: "bg-red-500 text-white" });
@@ -30,6 +35,7 @@ export function createRouter() {
       defaultErrorComponent: DefaultCatchBoundary,
       defaultNotFoundComponent: () => <NotFound />,
       context: { queryClient },
+      search: { strict: true },
     }),
     queryClient,
   );

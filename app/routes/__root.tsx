@@ -1,7 +1,13 @@
 import { DefaultCatchBoundary } from "@/components/default-catch-boundary";
 import { NotFound } from "@/components/not-found";
+import { ThemeProvider } from "@/components/theme";
+import { i18nQueryOptions, useI18nQuery } from "@/services/i18n.query";
+import {
+  preferenceQueryOptions,
+  usePreferenceQuery,
+} from "@/services/preference.query";
 import globalsCss from "@/styles/globals.css?url";
-import { seo } from "@/utils/seo";
+import { createMetadata } from "@/utils/seo";
 import type { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools/production";
 import {
@@ -11,51 +17,69 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { Meta, Scripts } from "@tanstack/start";
+import { outdent } from "outdent";
 import type * as React from "react";
 import { Toaster } from "react-hot-toast";
+import { createTranslator, IntlProvider } from "use-intl";
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
 }>()({
+  beforeLoad: async ({ context }) => {
+    const [auth, preference] = await Promise.all([
+      context.queryClient.ensureQueryData(authQueryOptions()),
+      context.queryClient.ensureQueryData(preferenceQueryOptions()),
+    ]);
+
+    const i18n = await context.queryClient.ensureQueryData(
+      i18nQueryOptions(preference.locale),
+    );
+    const translator = createTranslator(i18n);
+
+    return {
+      auth,
+      translator,
+    };
+  },
   head: () => ({
-    meta: [
-      {
-        charSet: "utf-8",
+    meta: createMetadata({
+      charSet: "utf-8",
+      viewport: {
+        width: "device-width",
+        "initial-scale": "1",
+        "maximum-scale": "1",
+        "user-scalable": "no",
+        "viewport-fit": "cover",
       },
-      {
-        name: "viewport",
-        content: "width=device-width, initial-scale=1",
-      },
-      ...seo({
-        title:
-          "TanStack Start | Type-Safe, Client-First, Full-Stack React Framework",
-        description:
-          "TanStack Start is a type-safe, client-first, full-stack React framework. ",
-      }),
-    ],
+      title: "Sliver Stack",
+      description: "A full-stack TypeScript framework",
+      robots: "follow, index",
+    }),
     links: [
-      { rel: "stylesheet", href: globalsCss },
-      {
-        rel: "apple-touch-icon",
-        sizes: "180x180",
-        href: "/apple-touch-icon.png",
-      },
       {
         rel: "icon",
-        type: "image/png",
-        sizes: "32x32",
-        href: "/favicon-32x32.png",
+        href: "/favicon.ico",
       },
       {
-        rel: "icon",
-        type: "image/png",
-        sizes: "16x16",
-        href: "/favicon-16x16.png",
+        rel: "stylesheet",
+        href: globalsCss,
       },
-      { rel: "manifest", href: "/site.webmanifest", color: "#fffff" },
-      { rel: "icon", href: "/favicon.ico" },
     ],
+    scripts: import.meta.env.PROD
+      ? []
+      : [
+          {
+            type: "module",
+            children: outdent /* js */`
+              import RefreshRuntime from "/_build/@react-refresh"
+              RefreshRuntime.injectIntoGlobalHook(window)
+              window.$RefreshReg$ = () => {}
+              window.$RefreshSig$ = () => (type) => type
+            `,
+          },
+        ],
   }),
+  component: RootComponent,
   errorComponent: (props) => {
     return (
       <RootDocument>
@@ -64,30 +88,25 @@ export const Route = createRootRouteWithContext<{
     );
   },
   notFoundComponent: () => <NotFound />,
-  component: RootComponent,
+  pendingComponent: PendingComponent,
 });
 
-function RootComponent() {
-  return (
-    <RootDocument>
-      <Outlet />
-    </RootDocument>
-  );
-}
+function RootDocument({ children }: React.PropsWithChildren) {
+  const preferenceQuery = usePreferenceQuery();
+  const i18nQuery = useI18nQuery(preferenceQuery.data.locale);
 
-function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-US">
+    <html lang={i18nQuery.data.locale} suppressHydrationWarning>
       <head>
         <Meta />
       </head>
       <body>
-        <div className="h-screen flex flex-col min-h-0">
-          <div className="flex-grow min-h-0 h-full flex flex-col">
+        <IntlProvider {...i18nQuery.data}>
+          <ThemeProvider>
             {children}
             <Toaster />
-          </div>
-        </div>
+          </ThemeProvider>
+        </IntlProvider>
         <ScrollRestoration />
         <ReactQueryDevtools />
         <TanStackRouterDevtools position="bottom-right" />
@@ -97,15 +116,20 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   );
 }
 
-// function LoadingIndicator() {
-//   const isLoading = useRouterState({ select: (s) => s.isLoading });
-//   return (
-//     <div
-//       className={`h-12 transition-all duration-300 ${
-//         isLoading ? "opacity-100 delay-300" : "opacity-0 delay-0"
-//       }`}
-//     >
-//       <Loader />
-//     </div>
-//   );
-// }
+function RootComponent() {
+  return (
+    <RootDocument>
+      <Outlet />
+    </RootDocument>
+  );
+}
+
+function PendingComponent() {
+  return (
+    <RootDocument>
+      <div className="flex items-center justify-center h-full">
+        <p>Loading...</p>
+      </div>
+    </RootDocument>
+  );
+}

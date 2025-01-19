@@ -1,7 +1,7 @@
 import { defineConfig } from "@tanstack/start/config";
-import tsConfigPaths from "vite-tsconfig-paths";
 import TurboConsole from "unplugin-turbo-console/vite";
 import type { App } from "vinxi";
+import tsConfigPaths from "vite-tsconfig-paths";
 
 const app = defineConfig({
   routers: {
@@ -48,7 +48,7 @@ function withGlobalMiddleware(app: App) {
       routers: app.config.routers.map((router) => ({
         ...router,
         middleware:
-          router.target !== "server" ? undefined : "src/global-middleware.ts",
+          router.target !== "server" ? undefined : "app/global-middleware.ts",
       })),
     },
   };

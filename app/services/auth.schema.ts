@@ -1,5 +1,5 @@
-import { z } from "zod";
 import { tKey } from "@/libs/i18n";
+import { z } from "zod";
 
 export const NAME_MIN = 2;
 export const NAME_MAX = 10;
@@ -41,3 +41,10 @@ export const passwordSchema = (t = tKey) =>
     .regex(PASSWORD_ONE_SPECIAL_REGEX, t("auth.password-one-special-regex"))
     .min(PASSWORD_MIN, t("auth.password-min", { min: PASSWORD_MIN }))
     .max(PASSWORD_MAX, t("auth.password-max", { max: PASSWORD_MAX }));
+
+export const signInSchema = (t = tKey) =>
+  z.object({
+    username: usernameSchema(t),
+    password: passwordSchema(t),
+    rememberMe: z.boolean().optional(),
+  });

@@ -3,20 +3,21 @@ import { zodValidator } from "@tanstack/zod-adapter";
 import { getHeader } from "vinxi/http";
 
 import { AVAILABLE_LOCALES, DEFAULT_LOCALE, isLocale } from "@/libs/i18n";
+import type { Locale } from "@/libs/i18n";
+import { authMiddleware } from "@/middlewares/auth";
+import { preferenceSchema } from "@/services/preference.schema";
+import type { Preference } from "@/services/preference.schema";
 import {
   COOKIE_OPTIONS_BASE,
   getCookieJSON,
   setCookieJSON,
 } from "@/utils/server";
-import { preferenceSchema } from "@/services/preference.schema";
-import type { Locale } from "@/libs/i18n";
-import type { Preference } from "@/services/preference.schema";
 
 const PREFERENCE_COOKIE_NAME = "preference";
 const PREFERENCE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
 export const getPreference = createServerFn({ method: "GET" })
-  // .middleware([authMiddleware])
+  .middleware([authMiddleware])
   .handler<Preference>(async ({ context }) => {
     let preference: Preference | undefined;
 
@@ -55,7 +56,7 @@ export const getPreference = createServerFn({ method: "GET" })
   });
 
 export const updatePreference = createServerFn({ method: "POST" })
-  // .middleware([authMiddleware])
+  .middleware([authMiddleware])
   .validator(zodValidator(preferenceSchema.partial()))
   .handler<Preference>(async ({ context, data }) => {
     const preference = await getPreference();

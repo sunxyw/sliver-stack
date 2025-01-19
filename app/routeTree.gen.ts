@@ -11,37 +11,61 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as AuthSignInImport } from './routes/auth/sign-in'
 
 // Create/Update Routes
+
+const AuthSignInRoute = AuthSignInImport.update({
+  id: '/auth/sign-in',
+  path: '/auth/sign-in',
+  getParentRoute: () => rootRoute,
+} as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {}
+  interface FileRoutesByPath {
+    '/auth/sign-in': {
+      id: '/auth/sign-in'
+      path: '/auth/sign-in'
+      fullPath: '/auth/sign-in'
+      preLoaderRoute: typeof AuthSignInImport
+      parentRoute: typeof rootRoute
+    }
+  }
 }
 
 // Create and export the route tree
 
-export interface FileRoutesByFullPath {}
+export interface FileRoutesByFullPath {
+  '/auth/sign-in': typeof AuthSignInRoute
+}
 
-export interface FileRoutesByTo {}
+export interface FileRoutesByTo {
+  '/auth/sign-in': typeof AuthSignInRoute
+}
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
+  '/auth/sign-in': typeof AuthSignInRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: never
+  fullPaths: '/auth/sign-in'
   fileRoutesByTo: FileRoutesByTo
-  to: never
-  id: '__root__'
+  to: '/auth/sign-in'
+  id: '__root__' | '/auth/sign-in'
   fileRoutesById: FileRoutesById
 }
 
-export interface RootRouteChildren {}
+export interface RootRouteChildren {
+  AuthSignInRoute: typeof AuthSignInRoute
+}
 
-const rootRouteChildren: RootRouteChildren = {}
+const rootRouteChildren: RootRouteChildren = {
+  AuthSignInRoute: AuthSignInRoute,
+}
 
 export const routeTree = rootRoute
   ._addFileChildren(rootRouteChildren)
@@ -52,7 +76,12 @@ export const routeTree = rootRoute
   "routes": {
     "__root__": {
       "filePath": "__root.tsx",
-      "children": []
+      "children": [
+        "/auth/sign-in"
+      ]
+    },
+    "/auth/sign-in": {
+      "filePath": "auth/sign-in.tsx"
     }
   }
 }

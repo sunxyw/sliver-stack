@@ -3,7 +3,7 @@ import type { NamespaceKeys, NestedKeyOf, useTranslations } from "use-intl";
 
 import type enMessages from "@/locales/en";
 
-export const AVAILABLE_LOCALES = ["en", "zh-cn"] as const;
+export const AVAILABLE_LOCALES = ["en"] as const;
 export const DEFAULT_LOCALE = "en" as const;
 
 export type Messages = typeof enMessages;

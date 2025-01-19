@@ -1,6 +1,6 @@
+import { tryit } from "radash";
 import { getCookie, setCookie } from "vinxi/http";
 import type { CookieSerializeOptions } from "vinxi/http";
-import { tryit } from "radash";
 
 export const COOKIE_OPTIONS_BASE = {
   path: "/",

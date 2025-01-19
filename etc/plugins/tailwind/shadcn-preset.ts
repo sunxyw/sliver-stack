@@ -1,7 +1,7 @@
-import plugin from "tailwindcss/plugin.js";
-import animatePlugin from "tailwindcss-animate";
 import type { Config } from "tailwindcss";
-import type { SetOptional, Except } from "type-fest";
+import animatePlugin from "tailwindcss-animate";
+import plugin from "tailwindcss/plugin.js";
+import type { Except, SetOptional } from "type-fest";
 
 type Preset = SetOptional<Config, "content">;
 

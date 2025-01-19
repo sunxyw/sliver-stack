@@ -2,8 +2,8 @@ import { createServerFn } from "@tanstack/start";
 import { zodValidator } from "@tanstack/zod-adapter";
 import type { IntlConfig } from "use-intl";
 
-import { preferenceSchema } from "@/services/preference.schema";
 import type { Locale, Messages } from "@/libs/i18n";
+import { preferenceSchema } from "@/services/preference.schema";
 
 export const getI18n = createServerFn({ method: "GET" })
   .validator(zodValidator(preferenceSchema.shape.locale))

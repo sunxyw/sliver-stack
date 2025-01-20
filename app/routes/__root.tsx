@@ -96,7 +96,11 @@ function RootDocument({ children }: React.PropsWithChildren) {
   const i18nQuery = useI18nQuery(preferenceQuery.data.locale);
 
   return (
-    <html lang={i18nQuery.data.locale} suppressHydrationWarning>
+    <html
+      lang={i18nQuery.data.locale}
+      suppressHydrationWarning
+      data-theme="dark"
+    >
       <head>
         <Meta />
       </head>

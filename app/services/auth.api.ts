@@ -1,5 +1,3 @@
-import { tKey } from "@/libs/i18n";
-import { logger } from "@/libs/logger";
 import type { Session } from "@/types/auth";
 import { setCookieJSON } from "@/utils/server";
 import { formOptions } from "@tanstack/react-form";
@@ -32,24 +30,22 @@ export const getAuth = createServerFn({ method: "GET" }).handler<Auth>(
   },
 );
 
-const signInFormOpts = (t = tKey) =>
-  formOptions({
-    defaultValues: {
-      username: "sunxyw",
-      password: "abcABC123&^D",
-      rememberMe: true,
-    },
-    validators: {
-      onChange: signInSchema(t),
-    },
-  });
-
-export { signInFormOpts };
+export const signInFormOpts = formOptions({
+  defaultValues: {
+    // TODO: remove default values
+    username: "sunxyw",
+    password: "abcABC123&^D",
+    rememberMe: true,
+  },
+  validators: {
+    onChange: signInSchema,
+  },
+});
 
 export const storeAuth = createServerFn({ method: "POST" })
   .validator((data: unknown) => {
     const input = data instanceof FormData ? Object.fromEntries(data) : data;
-    return signInSchema().parse(input);
+    return signInSchema.parse(input);
   })
   .handler(async ({ data }) => {
     // TODO: request token from remote

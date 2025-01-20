@@ -1,4 +1,3 @@
-import { tKey } from "@/libs/i18n";
 import { z } from "zod";
 
 export const NAME_MIN = 2;
@@ -16,35 +15,27 @@ export const PASSWORD_ONE_NUMBER_REGEX = /.*\d.*/;
 export const PASSWORD_ONE_SPECIAL_REGEX =
   /.*[!"#$%&'()*+,./:;<=>?@[\\\]^_{|}~-].*/;
 
-export const nameSchema = (t = tKey) =>
-  z
-    .string()
-    .min(NAME_MIN, t("auth.name-min", { min: NAME_MIN }))
-    .max(NAME_MAX, t("auth.name-max", { max: NAME_MAX }));
+export const nameSchema = z.string().min(NAME_MIN).max(NAME_MAX);
 
-export const emailSchema = (t = tKey) =>
-  z.string().email(t("auth.email-invalid"));
+export const emailSchema = z.string().email();
 
-export const usernameSchema = (t = tKey) =>
-  z
-    .string()
-    .regex(USERNAME_REGEX, t("auth.username-regex"))
-    .min(USERNAME_MIN, t("auth.username-min", { min: USERNAME_MIN }))
-    .max(USERNAME_MAX, t("auth.username-max", { max: USERNAME_MAX }));
+export const usernameSchema = z
+  .string()
+  .regex(USERNAME_REGEX)
+  .min(USERNAME_MIN)
+  .max(USERNAME_MAX);
 
-export const passwordSchema = (t = tKey) =>
-  z
-    .string()
-    .regex(PASSWORD_ONE_UPPERCASE_REGEX, t("auth.password-one-uppercase-regex"))
-    .regex(PASSWORD_ONE_LOWERCASE_REGEX, t("auth.password-one-lowercase-regex"))
-    .regex(PASSWORD_ONE_NUMBER_REGEX, t("auth.password-one-number-regex"))
-    .regex(PASSWORD_ONE_SPECIAL_REGEX, t("auth.password-one-special-regex"))
-    .min(PASSWORD_MIN, t("auth.password-min", { min: PASSWORD_MIN }))
-    .max(PASSWORD_MAX, t("auth.password-max", { max: PASSWORD_MAX }));
+export const passwordSchema = z
+  .string()
+  .regex(PASSWORD_ONE_UPPERCASE_REGEX)
+  .regex(PASSWORD_ONE_LOWERCASE_REGEX)
+  .regex(PASSWORD_ONE_NUMBER_REGEX)
+  .regex(PASSWORD_ONE_SPECIAL_REGEX)
+  .min(PASSWORD_MIN)
+  .max(PASSWORD_MAX);
 
-export const signInSchema = (t = tKey) =>
-  z.object({
-    username: usernameSchema(t),
-    password: passwordSchema(t),
-    rememberMe: z.boolean().optional(),
-  });
+export const signInSchema = z.object({
+  username: usernameSchema,
+  password: passwordSchema,
+  rememberMe: z.boolean().optional(),
+});

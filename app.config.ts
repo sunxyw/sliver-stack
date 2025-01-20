@@ -1,3 +1,4 @@
+import { paraglide } from "@inlang/paraglide-vite";
 import { defineConfig } from "@tanstack/start/config";
 import TurboConsole from "unplugin-turbo-console/vite";
 import type { App } from "vinxi";
@@ -24,6 +25,10 @@ const app = defineConfig({
         projects: ["./tsconfig.json"],
       }),
       TurboConsole(),
+      paraglide({
+        project: "./etc/project.inlang",
+        outdir: "./app/libs/i18n",
+      }),
     ],
   },
   react: {

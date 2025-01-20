@@ -2,8 +2,6 @@ import { createServerFn } from "@tanstack/start";
 import { zodValidator } from "@tanstack/zod-adapter";
 import { getHeader } from "vinxi/http";
 
-import { AVAILABLE_LOCALES, DEFAULT_LOCALE, isLocale } from "@/libs/i18n";
-import type { Locale } from "@/libs/i18n";
 import { authMiddleware } from "@/middlewares/auth";
 import { preferenceSchema } from "@/services/preference.schema";
 import type { Preference } from "@/services/preference.schema";
@@ -12,6 +10,12 @@ import {
   getCookieJSON,
   setCookieJSON,
 } from "@/utils/server";
+import {
+  type AvailableLanguageTag,
+  availableLanguageTags,
+  isAvailableLanguageTag,
+  sourceLanguageTag,
+} from "@/libs/i18n/runtime";
 
 const PREFERENCE_COOKIE_NAME = "preference";
 const PREFERENCE_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
@@ -90,21 +94,23 @@ function generateDefaultPreference(): Preference {
   const detectedLocale = detectLocale(acceptLanguages);
 
   return {
-    locale: detectedLocale || DEFAULT_LOCALE,
+    locale: detectedLocale || sourceLanguageTag,
   };
 }
 
-function detectLocale(acceptLanguages: string[]): Locale | undefined {
+function detectLocale(
+  acceptLanguages: string[],
+): AvailableLanguageTag | undefined {
   for (const acceptLanguage of acceptLanguages) {
     // exact match
-    if (isLocale(acceptLanguage)) return acceptLanguage;
+    if (isAvailableLanguageTag(acceptLanguage)) return acceptLanguage;
 
     // base language match (e.g., "en" from "en-GB")
     const baseLanguage = new Intl.Locale(acceptLanguage).language;
-    if (isLocale(baseLanguage)) return baseLanguage;
+    if (isAvailableLanguageTag(baseLanguage)) return baseLanguage;
 
     // base language fallback to region that is available
-    const supportedRegionsLanguage = AVAILABLE_LOCALES.filter(
+    const supportedRegionsLanguage = availableLanguageTags.filter(
       (lang) => new Intl.Locale(lang).language === baseLanguage,
     );
     if (supportedRegionsLanguage.length > 0) return supportedRegionsLanguage[0];

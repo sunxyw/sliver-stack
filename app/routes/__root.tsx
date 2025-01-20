@@ -1,6 +1,7 @@
 import { DefaultCatchBoundary } from "@/components/default-catch-boundary";
 import { NotFound } from "@/components/not-found";
 import { ThemeProvider } from "@/components/theme";
+import { setLanguageTag } from "@/libs/i18n/runtime";
 import { authQueryOptions } from "@/services/auth.query";
 import { i18nQueryOptions, useI18nQuery } from "@/services/i18n.query";
 import {
@@ -21,7 +22,6 @@ import { Meta, Scripts } from "@tanstack/start";
 import { outdent } from "outdent";
 import type * as React from "react";
 import { Toaster } from "react-hot-toast";
-import { IntlProvider, createTranslator } from "use-intl";
 
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
@@ -32,14 +32,13 @@ export const Route = createRootRouteWithContext<{
       context.queryClient.ensureQueryData(preferenceQueryOptions()),
     ]);
 
-    const i18n = await context.queryClient.ensureQueryData(
+    setLanguageTag(preference.locale);
+    await context.queryClient.ensureQueryData(
       i18nQueryOptions(preference.locale),
     );
-    const translator = createTranslator(i18n);
 
     return {
       auth,
-      translator,
     };
   },
   head: () => ({
@@ -102,12 +101,10 @@ function RootDocument({ children }: React.PropsWithChildren) {
         <Meta />
       </head>
       <body>
-        <IntlProvider {...i18nQuery.data}>
-          <ThemeProvider>
-            {children}
-            <Toaster />
-          </ThemeProvider>
-        </IntlProvider>
+        <ThemeProvider>
+          {children}
+          <Toaster />
+        </ThemeProvider>
         <ScrollRestoration />
         <ReactQueryDevtools />
         <TanStackRouterDevtools position="bottom-right" />

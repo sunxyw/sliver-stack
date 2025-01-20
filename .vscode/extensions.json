@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "usernamehw.errorlens",
+    "biomejs.biome",
+    "yoavbls.pretty-ts-errors",
+    "bradlc.vscode-tailwindcss",
+    "heybourn.headwind",
+    "waverlyai.js-in-string",
+    "inlang.vs-code-extension"
+  ]
+}

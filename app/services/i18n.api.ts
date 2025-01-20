@@ -1,18 +1,13 @@
+import type { AvailableLanguageTag } from "@/libs/i18n/runtime";
+import { preferenceSchema } from "@/services/preference.schema";
 import { createServerFn } from "@tanstack/start";
 import { zodValidator } from "@tanstack/zod-adapter";
-import type { IntlConfig } from "use-intl";
-
-import type { Locale, Messages } from "@/libs/i18n";
-import { preferenceSchema } from "@/services/preference.schema";
 
 export const getI18n = createServerFn({ method: "GET" })
   .validator(zodValidator(preferenceSchema.shape.locale))
   .handler(async ({ data }) => {
-    const messages = await import(`../locales/${data}.ts`);
-
     return {
-      locale: data as Locale,
+      locale: data as AvailableLanguageTag,
       timeZone: "UTC",
-      messages: messages.default as Messages,
-    } as const satisfies IntlConfig;
+    } as const;
   });

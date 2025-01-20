@@ -1,5 +1,6 @@
 import { FormItem, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import * as m from "@/libs/i18n/messages";
 import {
   getSignInFormDataFromServer,
   signInFormOpts,
@@ -12,7 +13,6 @@ import {
   useTransform,
 } from "@tanstack/react-form";
 import { createFileRoute } from "@tanstack/react-router";
-import { useTranslations } from "use-intl";
 
 export const Route = createFileRoute("/auth/sign-in")({
   component: AuthSignInPage,
@@ -22,11 +22,9 @@ export const Route = createFileRoute("/auth/sign-in")({
 });
 
 function AuthSignInPage() {
-  const t = useTranslations();
-
   const { state } = Route.useLoaderData();
   const form = useForm({
-    ...signInFormOpts(t),
+    ...signInFormOpts,
     transform: useTransform((baseForm) => mergeForm(baseForm, state), [state]),
   });
 
@@ -34,10 +32,14 @@ function AuthSignInPage() {
 
   return (
     <form method="POST" action={storeAuth.url} encType="multipart/form-data">
+      <h1>{m.greeting({ name: "sunxyw" })}</h1>
+
       <form.Field name="username">
         {(field) => (
           <FormItem>
-            <FormLabel htmlFor={field.name}>Username</FormLabel>
+            <FormLabel htmlFor={field.name}>
+              {m.clean_lost_shell_clip()}
+            </FormLabel>
             <Input
               placeholder="Username"
               name={field.name}
@@ -51,7 +53,9 @@ function AuthSignInPage() {
       <form.Field name="password">
         {(field) => (
           <FormItem>
-            <FormLabel htmlFor={field.name}>Password</FormLabel>
+            <FormLabel htmlFor={field.name}>
+              {m.left_yummy_butterfly_twist()}
+            </FormLabel>
             <Input
               type="password"
               placeholder="Password"
@@ -68,7 +72,9 @@ function AuthSignInPage() {
       >
         {([canSubmit, isSubmitting]) => (
           <button type="submit" disabled={!canSubmit || isSubmitting}>
-            {isSubmitting ? "Signing in..." : "Sign in"}
+            {isSubmitting
+              ? m.acidic_round_shrimp_pout()
+              : m.teal_keen_badger_wave()}
           </button>
         )}
       </form.Subscribe>

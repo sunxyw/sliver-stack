@@ -1,6 +1,6 @@
 <!-- omit in toc -->
 
-# 月球像素社区 - 前端项目贡献指南
+# 前端项目贡献指南
 
 首先，感谢您抽出宝贵时间做出贡献！ ❤️
 
@@ -10,7 +10,7 @@
 
 ## 目录
 
-- [月球像素社区 - 前端项目贡献指南](#月球像素社区---前端项目贡献指南)
+- [前端项目贡献指南](#前端项目贡献指南)
   - [目录](#目录)
   - [我有一个问题](#我有一个问题)
   - [我想做出贡献](#我想做出贡献)
@@ -31,11 +31,11 @@
 
 > 如果您想提问，我们假设您已经阅读了可用的[文档]()。
 
-在提问之前，最好先搜索现有的[问题](https://github.com/MoonPixelTeam/web/issues)，看看是否有可以帮助您的。如果您找到了合适的问题但仍需要澄清，可以在该问题中写下您的问题。同时，建议您先在互联网上搜索答案。
+在提问之前，最好先搜索现有的[问题](https://github.com/sunxyw/sliver-stack/issues)，看看是否有可以帮助您的。如果您找到了合适的问题但仍需要澄清，可以在该问题中写下您的问题。同时，建议您先在互联网上搜索答案。
 
 如果您仍然觉得有必要提问并需要澄清，我们建议您：
 
-- 打开一个[问题](https://github.com/MoonPixelTeam/web/issues/new).
+- 打开一个[问题](https://github.com/sunxyw/sliver-stack/issues/new).
 - 提供尽可能多的背景信息，说明您遇到了什么情况。
 - 提供项目和平台版本（nodejs、npm 等），根据相关性提供。
 
@@ -70,7 +70,7 @@ Depending on how large the project is, you may want to outsource the questioning
 
 - 确保您使用的是最新版本。
 - 确认这是一个错误，而不是用户错误。
-- 检查现有的[错误报告](https://github.com/MoonPixelTeam/web/issues?q=label%3Abug)。
+- 检查现有的[错误报告](https://github.com/sunxyw/sliver-stack/issues?q=label%3Abug)。
 - 在互联网上搜索解决方案。
 - 收集有关错误的信息：
   - 堆栈跟踪（回溯）
@@ -89,7 +89,7 @@ Depending on how large the project is, you may want to outsource the questioning
 
 我们使用 GitHub 问题来跟踪错误。如果您遇到项目问题：
 
-- 打开一个[问题](https://github.com/MoonPixelTeam/web/issues/new).
+- 打开一个[问题](https://github.com/sunxyw/sliver-stack/issues/new).
 - 解释您期望的行为和实际行为。
 - 请提供尽可能多的背景信息，并描述复现步骤，以便其他人能够独立重现这个问题。
 - 提供您在上一节中收集的信息。
@@ -98,21 +98,21 @@ Depending on how large the project is, you may want to outsource the questioning
 
 ### 提出改进建议
 
-本节指导您提交月球像素社区前端项目的改进建议，**包括全新功能和对现有功能的小改进**。遵循这些指南将帮助维护者理解您的建议并找到相关建议。
+本节指导您提交前端项目的改进建议，**包括全新功能和对现有功能的小改进**。遵循这些指南将帮助维护者理解您的建议并找到相关建议。
 
 <!-- omit in toc -->
 
 #### 提交改进建议之前
 
 - 确保您使用的是最新版本。
-- 进行[搜索](https://github.com/MoonPixelTeam/web/issues)，看看是否已经有人提出了这个改进建议。如果有，请在现有问题上添加评论，而不是开新的。
+- 进行[搜索](https://github.com/sunxyw/sliver-stack/issues)，看看是否已经有人提出了这个改进建议。如果有，请在现有问题上添加评论，而不是开新的。
 - 确定您的想法是否符合项目的范围和目标。
 
 <!-- omit in toc -->
 
 #### 提交改进建议
 
-改进建议通过[GitHub 问题](https://github.com/MoonPixelTeam/web/issues)进行追踪.
+改进建议通过[GitHub 问题](https://github.com/sunxyw/sliver-stack/issues)进行追踪.
 
 - 使用**清晰描述性的标题**来标识建议。
 - 提供建议改进的**详细步骤描述**，尽可能详细。

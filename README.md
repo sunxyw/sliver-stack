@@ -5,7 +5,7 @@
 - 框架：Tanstack Start
 - 样式：TailwindCSS
 - 图标：_待定_
-- 国际化：next-intl core
+- 国际化：Paraglide JS (inlang ecosystem)
 - 数据验证：zod
 - 代码格式化：biome
 - 数据获取：TanStack Query

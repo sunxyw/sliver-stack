@@ -1,9 +1,9 @@
-import * as v from "valibot";
+import { z } from "zod";
 
 const createEnv = () => {
-  const EnvSchema = v.object({
-    API_URL: v.string(),
-    APP_URL: v.optional(v.pipe(v.string(), v.url())),
+  const envSchema = z.object({
+    API_URL: z.string(),
+    APP_URL: z.string().url().optional(),
   });
 
   const envVars = Object.entries(import.meta.env).reduce<
@@ -15,20 +15,20 @@ const createEnv = () => {
     return acc;
   }, {});
 
-  const parsedEnv = v.safeParse(EnvSchema, envVars);
+  const parsedEnv = envSchema.safeParse(envVars);
 
   if (!parsedEnv.success) {
     throw new Error(
       `Invalid env provided.
       The following variables are missing or invalid:
-      ${Object.entries(parsedEnv.issues)
+      ${Object.entries(parsedEnv.error.flatten().fieldErrors)
         .map(([k, v]) => `- ${k}: ${v}`)
         .join("\n")}
       `,
     );
   }
 
-  return parsedEnv.output;
+  return parsedEnv.data;
 };
 
 export const env = createEnv();

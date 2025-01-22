@@ -1,10 +1,11 @@
+import { api } from "@/libs/api-client";
+import type { ApiDataResponse } from "@/types/api-types";
 import type { Session } from "@/types/auth";
 import { setCookieJSON } from "@/utils/server";
 import { formOptions } from "@tanstack/react-form";
 import { getFormData } from "@tanstack/react-form/start";
 import { redirect } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/start";
-import ky from "ky";
 import type { Simplify } from "type-fest";
 import { getEvent, getWebRequest } from "vinxi/http";
 import { signInSchema } from "./auth.schema";
@@ -42,6 +43,7 @@ export const signInFormOpts = formOptions({
   },
 });
 
+// TODO: change to query (mutation), component use query
 export const storeAuth = createServerFn({ method: "POST" })
   .validator((data: unknown) => {
     const input = data instanceof FormData ? Object.fromEntries(data) : data;
@@ -49,17 +51,14 @@ export const storeAuth = createServerFn({ method: "POST" })
   })
   .handler(async ({ data }) => {
     // TODO: request token from remote
-    const response = await ky
-      .post("https://postman-echo.com/post", {
+    const response = await api
+      .post("auth/login/mail", {
         json: {
-          accessToken: "accessToken",
-          refreshToken: "refreshToken",
-          idToken: "idToken",
-          expiresAt: Date.now() + 1000 * 60 * 60,
-          user: { id: -1, name: "sunxyw" },
+          mail: data.username,
+          password: data.password,
         },
       })
-      .json<{ data: Session }>();
+      .json<ApiDataResponse<string>>();
 
     const session = response.data;
     setCookieJSON(AUTH_SESSION_COOKIE_NAME, session, {
@@ -71,6 +70,7 @@ export const storeAuth = createServerFn({ method: "POST" })
     });
   });
 
+// TODO: remove
 export const getSignInFormDataFromServer = createServerFn({
   method: "GET",
 }).handler(async () => {

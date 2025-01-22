@@ -22,12 +22,15 @@ export const Route = createFileRoute("/auth/sign-in")({
 });
 
 function AuthSignInPage() {
+  // TODO: no server-side data needed
   const { state } = Route.useLoaderData();
   const form = useForm({
     ...signInFormOpts,
     transform: useTransform((baseForm) => mergeForm(baseForm, state), [state]),
+    // TODO: use mutation, for better ux
   });
 
+  // TODO: display
   const formErrors = useStore(form.store, (formState) => formState.errors);
 
   return (

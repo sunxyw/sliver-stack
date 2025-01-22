@@ -1,3 +1,4 @@
+import logoImage from "@/assets/logo.svg";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/utils/ui";
@@ -18,13 +19,13 @@ function RootLayout() {
               <div className="flex shrink-0 items-center">
                 <img
                   alt="Your Company"
-                  src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-                  className="block h-8 w-auto lg:hidden"
+                  src={logoImage}
+                  className="block h-8 w-auto lg:hidden dark:invert"
                 />
                 <img
                   alt="Your Company"
-                  src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
-                  className="hidden h-8 w-auto lg:block"
+                  src={logoImage}
+                  className="hidden h-8 w-auto lg:block dark:invert"
                 />
               </div>
               <div className="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">

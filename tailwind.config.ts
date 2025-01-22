@@ -10,7 +10,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: fontFamily.sans,
+        sans: ['"Source Sans 3"', ...fontFamily.sans],
         mono: fontFamily.mono,
       },
     },

@@ -66,7 +66,7 @@ function ThemeProvider({ children }: PropsWithChildren) {
     if (theme !== "system") return;
 
     const handleSystemThemeChange = () => {
-      _setResolvedTheme(getResolvedTheme(theme));
+      // _setResolvedTheme(getResolvedTheme(theme));
     };
 
     const media = window.matchMedia("(prefers-color-scheme: dark)");

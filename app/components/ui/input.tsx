@@ -8,21 +8,24 @@ interface InputComposition {
   Icon: typeof InputIcon;
 }
 
-const iconVariants = cva("absolute top-2.5", {
-  variants: {
-    size: {
-      default: "h-4 w-4",
+const iconVariants = cva(
+  "absolute top-3 text-gray-dim group-focus-within:text-gray-normal",
+  {
+    variants: {
+      size: {
+        default: "size-6",
+      },
+      side: {
+        left: "left-3",
+        right: "right-3",
+      },
     },
-    side: {
-      left: "left-3",
-      right: "right-3",
+    defaultVariants: {
+      size: "default",
+      side: "left",
     },
   },
-  defaultVariants: {
-    size: "default",
-    side: "left",
-  },
-});
+);
 
 export interface InputIconProps
   extends React.HTMLAttributes<HTMLOrSVGElement>,
@@ -44,15 +47,16 @@ const InputIcon = React.forwardRef<HTMLSlotElement, InputIconProps>(
 InputIcon.displayName = "InputIcon";
 
 const inputVariants = cva(
-  "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+  "flex w-full h-12 p-3 text-base transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-gray-normal placeholder:text-gray-dim focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       composition: {
-        true: "px-9",
+        true: "px-12",
         false: "px-3",
       },
       variant: {
-        surface: "bg-gray-ui border-gray-normal",
+        surface:
+          "bg-gray-ui border border-gray-normal focus-visible:border-gray-9 dark:focus-visible:border-graydark-9",
         soft: "bg-bluea-ui border-bluea-normal",
       },
     },
@@ -82,7 +86,7 @@ const Root = React.forwardRef<HTMLInputElement, InputProps>(
 
     if (Icons.length > 0) {
       return (
-        <div className="relative">
+        <div className="relative group">
           {Icons}
           <Input
             ref={ref}

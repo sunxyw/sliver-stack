@@ -1,4 +1,5 @@
 import { paraglide } from "@inlang/paraglide-vite";
+import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "@tanstack/start/config";
 import TurboConsole from "unplugin-turbo-console/vite";
 import type { App } from "vinxi";
@@ -29,6 +30,7 @@ const app = defineConfig({
         project: "./etc/project.inlang",
         outdir: "./app/libs/i18n",
       }),
+      tailwindcss(),
     ],
   },
   react: {

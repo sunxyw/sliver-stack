@@ -47,7 +47,7 @@ const InputIcon = React.forwardRef<HTMLSlotElement, InputIconProps>(
 InputIcon.displayName = "InputIcon";
 
 const inputVariants = cva(
-  "flex w-full h-12 p-3 text-base transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-gray-normal placeholder:text-gray-dim focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+  "flex w-full h-12 p-3 text-base transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-gray-normal placeholder:text-gray-dim focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-50",
   {
     variants: {
       composition: {

@@ -5,14 +5,14 @@ import * as React from "react";
 import { cn } from "@/utils/ui";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-8 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-colors focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-blue-8 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
   {
     variants: {
       variant: {
         solid: "bg-blue-solid",
-        soft: "bg-bluea-ui shadow-sm",
+        soft: "bg-bluea-ui shadow-xs",
         ghost: "bg-blue-ghost",
-        outline: "border-blue-normal shadow-sm",
+        outline: "border-blue-normal shadow-xs",
       },
       size: {
         default: "h-9 px-4 py-2",

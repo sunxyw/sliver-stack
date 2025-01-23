@@ -51,7 +51,11 @@ function AuthSignInPage() {
         </CardHeader>
         <Separator className="my-6" />
         <CardContent className="p-0">
-          <form method="POST" action={storeAuth.url} encType="multipart/form-data">
+          <form
+            method="POST"
+            action={storeAuth.url}
+            encType="multipart/form-data"
+          >
             <div className="space-y-4">
               <form.Field name="username">
                 {(field) => (
@@ -107,10 +111,19 @@ function AuthSignInPage() {
               </div>
 
               <form.Subscribe
-                selector={(formState) => [formState.canSubmit, formState.isSubmitting]}
+                selector={(formState) => [
+                  formState.canSubmit,
+                  formState.isSubmitting,
+                ]}
               >
                 {([canSubmit, isSubmitting]) => (
-                  <Button type="submit" disabled={!canSubmit || isSubmitting} variant="solid" size="lg" className="w-full">
+                  <Button
+                    type="submit"
+                    disabled={!canSubmit || isSubmitting}
+                    variant="solid"
+                    size="lg"
+                    className="w-full"
+                  >
                     {isSubmitting
                       ? m.acidic_round_shrimp_pout()
                       : m.teal_keen_badger_wave()}
